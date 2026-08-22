@@ -1,10 +1,10 @@
 module "talos" {
   source = "../../modules/talos-cluster"
   cluster_name     = "homelab-utm-test"
-  cluster_endpoint = "192.168.64.2"
+  cluster_endpoint = "192.168.64.3"
   install_disk     = "/dev/vda"
   nodes = {
-    utm-test = { ip = "192.168.64.2", role = "controlplane" }
+    utm-test = { ip = "192.168.64.3", role = "controlplane" }
   }
   allow_scheduling_on_controlplanes = true
 }
@@ -29,11 +29,28 @@ provider "kubectl" {
   config_path = local_sensitive_file.kubeconfig.filename
 }
 
+resource "null_resource" "wait_for_kubernetes" {
+  depends_on = [local_sensitive_file.kubeconfig]
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      for i in $(seq 1 30); do
+        if kubectl --kubeconfig=${local_sensitive_file.kubeconfig.filename} get --raw=/healthz >/dev/null 2>&1; then
+          echo "Kubernetes API is ready"
+          exit 0
+        fi
+        echo "Waiting for Kubernetes API... ($i/30)"
+        sleep 5
+      done
+      echo "Timed out waiting for Kubernetes API"
+      exit 1
+    EOT
+  }
+}
+
 module "argocd" {
   source = "../../modules/argocd-bootstrap"
-
   root_app_repo_url = "https://github.com/robin-vidal/homelab"
   root_app_path     = "kubernetes/clusters/utm-test"
-
-  depends_on = [local_sensitive_file.kubeconfig]
+  depends_on = [null_resource.wait_for_kubernetes]
 }
