@@ -1,9 +1,5 @@
 terraform {
   required_providers {
-    talos = {
-      source  = "siderolabs/talos"
-      version = "~> 0.7"
-    }
     helm = {
       source  = "hashicorp/helm"
       version = "~> 2.15"
