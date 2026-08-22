@@ -1,18 +1,3 @@
-resource "local_sensitive_file" "kubeconfig" {
-  content  = var.kubeconfig
-  filename = "${path.module}/kubeconfig.yaml"
-}
-
-provider "helm" {
-  kubernetes {
-    config_path = local_sensitive_file.kubeconfig.filename
-  }
-}
-
-provider "kubectl" {
-  config_path = local_sensitive_file.kubeconfig.filename
-}
-
 resource "helm_release" "argocd" {
   name             = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
@@ -20,8 +5,6 @@ resource "helm_release" "argocd" {
   version          = var.argocd_version
   namespace        = "argocd"
   create_namespace = true
-
-  depends_on = [local_sensitive_file.kubeconfig]
 }
 
 resource "kubectl_manifest" "root_app" {

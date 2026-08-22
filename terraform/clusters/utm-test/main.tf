@@ -14,12 +14,26 @@ output "kubeconfig" {
   sensitive = true
 }
 
+resource "local_sensitive_file" "kubeconfig" {
+  content  = module.talos.kubeconfig
+  filename = "${path.module}/kubeconfig.yaml"
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = local_sensitive_file.kubeconfig.filename
+  }
+}
+
+provider "kubectl" {
+  config_path = local_sensitive_file.kubeconfig.filename
+}
+
 module "argocd" {
   source = "../../modules/argocd-bootstrap"
 
-  kubeconfig        = module.talos.kubeconfig
   root_app_repo_url = "https://github.com/robin-vidal/homelab"
   root_app_path     = "kubernetes/clusters/utm-test"
 
-  depends_on = [module.talos]
+  depends_on = [local_sensitive_file.kubeconfig]
 }

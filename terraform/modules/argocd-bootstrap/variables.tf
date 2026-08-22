@@ -1,9 +1,3 @@
-variable "kubeconfig" {
-  description = "Raw kubeconfig content used to connect to the target cluster"
-  type        = string
-  sensitive   = true
-}
-
 variable "argocd_version" {
   description = "Version of the argo-cd Helm chart to install"
   type        = string
