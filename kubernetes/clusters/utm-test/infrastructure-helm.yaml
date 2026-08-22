@@ -12,19 +12,19 @@ spec:
           - path: "kubernetes/infrastructure/*/helm.yaml"
   template:
     metadata:
-      name: "infra-{{.name}}"
+      name: "infra-{{name}}"
     spec:
       project: default
       source:
-        repoURL: "{{.repoURL}}"
-        chart: "{{.chart}}"
-        targetRevision: "{{.targetRevision}}"
+        repoURL: "{{repoURL}}"
+        chart: "{{chart}}"
+        targetRevision: "{{targetRevision}}"
         helm:
           valueFiles:
             - values.yaml
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{.namespace}}"
+        namespace: "{{namespace}}"
       syncPolicy:
         automated:
           prune: true

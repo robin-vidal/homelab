@@ -12,19 +12,19 @@ spec:
           - path: "kubernetes/apps/*/helm.yaml"
   template:
     metadata:
-      name: "app-{{.name}}"
+      name: "app-{{name}}"
     spec:
       project: default
       source:
-        repoURL: "{{.repoURL}}"
-        chart: "{{.chart}}"
-        targetRevision: "{{.targetRevision}}"
+        repoURL: "{{repoURL}}"
+        chart: "{{chart}}"
+        targetRevision: "{{targetRevision}}"
         helm:
           valueFiles:
             - values.yaml
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{.namespace}}"
+        namespace: "{{namespace}}"
       syncPolicy:
         automated:
           prune: true
