@@ -36,3 +36,11 @@ resource "kubectl_manifest" "root_app" {
 
   depends_on = [helm_release.argocd]
 }
+
+resource "kubectl_manifest" "helm_apps" {
+  for_each = var.helm_apps
+
+  yaml_body = file(each.value)
+
+  depends_on = [helm_release.argocd]
+}

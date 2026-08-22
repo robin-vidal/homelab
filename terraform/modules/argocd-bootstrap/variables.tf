@@ -19,3 +19,9 @@ variable "root_app_target_revision" {
   type        = string
   default     = "main"
 }
+
+variable "helm_apps" {
+  description = "Map of ArgoCD Application manifests for Helm-based infrastructure components"
+  type        = map(string)
+  default     = {}
+}
