@@ -5,6 +5,11 @@ resource "helm_release" "argocd" {
   version          = var.argocd_version
   namespace        = "argocd"
   create_namespace = true
+
+  set {
+    name  = "configs.cm.kustomize\\.buildOptions"
+    value = "--enable-helm"
+  }
 }
 
 resource "kubectl_manifest" "root_app" {
