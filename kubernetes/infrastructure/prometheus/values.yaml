@@ -1,0 +1,2 @@
+server:
+  retention: 30d
