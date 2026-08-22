@@ -35,9 +35,5 @@ module "argocd" {
   root_app_repo_url = "https://github.com/robin-vidal/homelab"
   root_app_path     = "kubernetes/clusters/utm-test"
 
-  helm_apps = {
-    prometheus = "${path.module}/../../../kubernetes/infrastructure/prometheus/application.yaml"
-  }
-
   depends_on = [local_sensitive_file.kubeconfig]
 }

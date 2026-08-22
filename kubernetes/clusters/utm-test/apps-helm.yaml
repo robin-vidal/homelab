@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps-helm
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/robin-vidal/homelab
+        revision: main
+        files:
+          - path: "kubernetes/apps/*/helm.yaml"
+  template:
+    metadata:
+      name: "app-{{.name}}"
+    spec:
+      project: default
+      source:
+        repoURL: "{{.repoURL}}"
+        chart: "{{.chart}}"
+        targetRevision: "{{.targetRevision}}"
+        helm:
+          valueFiles:
+            - values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{.namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
