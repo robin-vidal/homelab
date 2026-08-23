@@ -2,3 +2,6 @@ server:
   retention: 30d
   persistentVolume:
     enabled: false
+alertmanager:
+  persistence:
+    enabled: false
