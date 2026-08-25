@@ -1,10 +1,10 @@
 module "talos" {
   source = "../../modules/talos-cluster"
   cluster_name     = "homelab-utm-test"
-  cluster_endpoint = "192.168.64.3"
+  cluster_endpoint = "192.168.64.4"
   install_disk     = "/dev/vda"
   nodes = {
-    utm-test = { ip = "192.168.64.3", role = "controlplane" }
+    utm-test = { ip = "192.168.64.4", role = "controlplane" }
   }
   allow_scheduling_on_controlplanes = true
 }
