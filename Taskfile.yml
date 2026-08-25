@@ -1,0 +1,35 @@
+version: '3'
+
+tasks:
+  bootstrap:
+    desc: Full cluster bootstrap from scratch
+    cmds:
+      - task: age-key
+      - task: terraform
+      - task: kubeconfig
+      - task: sops-secret
+
+  age-key:
+    desc: Generate age key if not exists
+    cmds:
+      - mkdir -p ~/.config/sops/age
+      - test -f ~/.config/sops/age/keys.txt || age-keygen -o ~/.config/sops/age/keys.txt
+
+  terraform:
+    desc: Init and apply Terraform bootstrap
+    dir: terraform/clusters/utm-test
+    cmds:
+      - tofu init
+      - tofu apply
+
+  kubeconfig:
+    desc: Copy kubeconfig from Terraform output to ~/.kube/config
+    dir: terraform/clusters/utm-test
+    cmds:
+      - mkdir -p ~/.kube
+      - cp kubeconfig.yaml ~/.kube/config
+
+  sops-secret:
+    desc: Load age key into cluster for ArgoCD SOPS decryption
+    cmds:
+      - kubectl create secret generic argocd-age-key --from-file=keys.txt=$HOME/.config/sops/age/keys.txt -n argocd --dry-run=client -o yaml | kubectl apply -f -
