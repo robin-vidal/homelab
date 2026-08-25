@@ -3,7 +3,7 @@ kind: Kustomization
 helmCharts:
   - name: local-path-provisioner
     repo: https://charts.containeroo.ch
-    version: 0.0.9
+    version: 0.0.38
     releaseName: local-path-provisioner
     namespace: local-path-provisioner
     valuesFile: values.yaml
