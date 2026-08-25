@@ -1,0 +1,28 @@
+nextcloud:
+  host: nextcloud.local
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-admin
+    usernameKey: username
+    passwordKey: password
+
+internalDatabase:
+  enabled: false
+
+externalDatabase:
+  enabled: true
+  type: postgresql
+  host: nextcloud-db-rw
+  port: 5432
+  database: nextcloud
+  existingSecret:
+    secretName: nextcloud-db-app
+    usernameKey: username
+    passwordKey: password
+
+persistence:
+  enabled: true
+  size: 50Gi
+
+ingress:
+  enabled: false
