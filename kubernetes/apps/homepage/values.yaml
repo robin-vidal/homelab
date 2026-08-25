@@ -1,3 +1,6 @@
+env:
+  HOMEPAGE_ALLOWED_HOSTS: "*"
+
 config:
   settingsString: |
     title: Homelab
