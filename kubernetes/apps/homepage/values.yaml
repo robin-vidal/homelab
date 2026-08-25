@@ -18,8 +18,8 @@ config:
   widgets:
     - search:
         provider: custom
-        url: https://www.google.com/search?q={query}+-ai
-        suggestionUrl: https://www.google.com/complete/search?output=firefox&q={query}
+        url: https://www.google.com/search?q=-ai+
+        suggestionUrl: https://www.google.com/complete/search?output=firefox&q=
         target: _blank
         focus: true
     - greeting:
