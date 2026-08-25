@@ -1,0 +1,50 @@
+config:
+  settingsString: |
+    title: Homelab
+    theme: dark
+    color: slate
+    headerStyle: clean
+    layout:
+      Infrastructure:
+        style: row
+        columns: 4
+      Apps:
+        style: row
+        columns: 4
+
+  widgets:
+    - search:
+        provider: custom
+        url: https://www.google.com/search?q={query}+-ai
+        suggestionUrl: https://www.google.com/complete/search?output=firefox&q={query}
+        target: _blank
+        focus: true
+    - greeting:
+        text_size: xl
+        text: Homelab
+
+  services:
+    - Infrastructure:
+        - ArgoCD:
+            href: http://argocd.homelab
+            icon: argocd
+            description: GitOps
+        - Grafana:
+            href: http://grafana.homelab
+            icon: grafana
+            description: Dashboards
+        - Prometheus:
+            href: http://prometheus.homelab
+            icon: prometheus
+            description: Metrics
+    - Apps:
+        - Nextcloud:
+            href: http://nextcloud.homelab
+            icon: nextcloud
+            description: Cloud
+
+  bookmarks:
+    - Dev:
+        - GitHub:
+            - abbr: GH
+              href: https://github.com/robin-vidal/homelab
