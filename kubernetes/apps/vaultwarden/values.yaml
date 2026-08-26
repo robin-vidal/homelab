@@ -1,0 +1,21 @@
+domain: "https://vaultwarden.homelab"
+
+adminToken:
+  existingSecret: vaultwarden-admin
+  existingSecretKey: admin-token
+
+database:
+  type: postgresql
+  existingSecret: vaultwarden-db-app
+  existingSecretKey: uri
+
+storage:
+  data:
+    name: vaultwarden-data
+    size: 10Gi
+    class: local-path
+    accessMode: ReadWriteOnce
+    path: /data
+
+ingress:
+  enabled: false
