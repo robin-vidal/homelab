@@ -65,5 +65,8 @@ repoServer:
         - mountPath: /etc/sops/age
           name: age-key
           readOnly: true
+        - mountPath: /usr/local/share/kustomize/plugin/viaduct.ai/v1/ksops/ksops
+          name: custom-tools
+          subPath: ksops
         - mountPath: /tmp
           name: tmp
