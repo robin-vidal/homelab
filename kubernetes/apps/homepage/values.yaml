@@ -42,7 +42,7 @@ config:
             description: Metrics
     - Apps:
         - Nextcloud:
-            href: http://nextcloud.homelab
+            href: http://cloud.robin-vidal.com
             icon: nextcloud
             description: Cloud
 
