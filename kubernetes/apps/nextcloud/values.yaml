@@ -1,5 +1,14 @@
 nextcloud:
   host: cloud.robin-vidal.com
+  configs:
+    trusted.php: |-
+      <?php
+      $CONFIG = array(
+        'trusted_domains' => array(
+          0 => 'localhost',
+          1 => 'cloud.robin-vidal.com',
+        ),
+      );
   existingSecret:
     enabled: true
     secretName: nextcloud-admin
