@@ -24,6 +24,12 @@ repoServer:
       volumeMounts:
         - mountPath: /custom-tools
           name: custom-tools
+    - name: install-helm
+      image: alpine/helm:3.16.4
+      command: [cp, /usr/bin/helm, /custom-tools/helm]
+      volumeMounts:
+        - mountPath: /custom-tools
+          name: custom-tools
 
   env:
     - name: SOPS_AGE_KEY_FILE
@@ -68,5 +74,8 @@ repoServer:
         - mountPath: /usr/local/share/kustomize/plugin/viaduct.ai/v1/ksops/ksops
           name: custom-tools
           subPath: ksops
+        - mountPath: /usr/local/bin/helm
+          name: custom-tools
+          subPath: helm
         - mountPath: /tmp
           name: tmp
