@@ -34,6 +34,9 @@ livenessProbe:
     httpHeaders:
       - name: Host
         value: nextcloud.local
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3
 
 readinessProbe:
   httpGet:
@@ -42,6 +45,9 @@ readinessProbe:
     httpHeaders:
       - name: Host
         value: nextcloud.local
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3
 
 startupProbe:
   httpGet:
@@ -50,3 +56,6 @@ startupProbe:
     httpHeaders:
       - name: Host
         value: nextcloud.local
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 30
