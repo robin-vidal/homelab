@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: crd-installer
+  namespace: envoy-gateway-system
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "-1"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: crd-installer
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "-1"
+rules:
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["get", "list", "create", "update", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: crd-installer
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "-1"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: crd-installer
+subjects:
+  - kind: ServiceAccount
+    name: crd-installer
+    namespace: envoy-gateway-system
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: envoy-gateway-crd-installer
+  namespace: envoy-gateway-system
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  template:
+    spec:
+      serviceAccountName: crd-installer
+      restartPolicy: OnFailure
+      initContainers:
+        - name: render-crds
+          image: alpine/helm:3.16.4
+          command: [sh, -c]
+          args:
+            - helm show crds oci://docker.io/envoyproxy/gateway-helm --version v1.9.0 > /crds/crds.yaml
+          volumeMounts:
+            - name: crds
+              mountPath: /crds
+      containers:
+        - name: apply-crds
+          image: bitnami/kubectl:1.32
+          command: [kubectl]
+          args:
+            - apply
+            - --server-side
+            - --field-manager=argocd
+            - --validate=false
+            - -f
+            - /crds/crds.yaml
+          volumeMounts:
+            - name: crds
+              mountPath: /crds
+      volumes:
+        - name: crds
+          emptyDir: {}
