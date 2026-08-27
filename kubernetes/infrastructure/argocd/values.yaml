@@ -49,6 +49,8 @@ repoServer:
       env:
         - name: SOPS_AGE_KEY_FILE
           value: /etc/sops/age/keys.txt
+        - name: KUSTOMIZE_PLUGIN_HOME
+          value: /usr/local/share/kustomize/plugin
       securityContext:
         runAsNonRoot: true
         runAsUser: 999
