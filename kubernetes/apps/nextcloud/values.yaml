@@ -1,5 +1,5 @@
 nextcloud:
-  host: nextcloud.local
+  host: cloud.robin-vidal.com
   existingSecret:
     enabled: true
     secretName: nextcloud-admin
