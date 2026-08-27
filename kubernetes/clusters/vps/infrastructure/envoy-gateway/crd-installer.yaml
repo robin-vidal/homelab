@@ -63,7 +63,7 @@ spec:
               mountPath: /crds
       containers:
         - name: apply-crds
-          image: bitnami/kubectl:1.32
+          image: bitnami/kubectl:latest
           command: [kubectl]
           args:
             - apply
