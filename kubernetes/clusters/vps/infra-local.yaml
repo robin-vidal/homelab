@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: infra-local
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/robin-vidal/homelab
+        revision: main
+        directories:
+          - path: kubernetes/clusters/vps/infrastructure/*
+  template:
+    metadata:
+      name: "infra-local-{{path.basename}}"
+      annotations:
+        argocd.argoproj.io/compare-options: ServerSideDiff=true
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/robin-vidal/homelab
+        targetRevision: main
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
