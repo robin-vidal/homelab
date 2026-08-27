@@ -1,8 +1,11 @@
 version: '3'
 
+vars:
+  CLUSTER: '{{.CLUSTER | default "utm-test"}}'
+
 tasks:
   bootstrap:
-    desc: Full cluster bootstrap from scratch
+    desc: Full cluster bootstrap from scratch (CLUSTER=utm-test|vps)
     cmds:
       - task: age-key
       - task: terraform
@@ -16,15 +19,15 @@ tasks:
       - test -f ~/.config/sops/age/keys.txt || age-keygen -o ~/.config/sops/age/keys.txt
 
   terraform:
-    desc: Init and apply Terraform bootstrap
-    dir: terraform/clusters/utm-test
+    desc: Init and apply Terraform bootstrap (CLUSTER=utm-test|vps)
+    dir: terraform/clusters/{{.CLUSTER}}
     cmds:
       - tofu init
       - tofu apply
 
   kubeconfig:
-    desc: Copy kubeconfig from Terraform output to ~/.kube/config
-    dir: terraform/clusters/utm-test
+    desc: Copy kubeconfig from Terraform output to ~/.kube/config (CLUSTER=utm-test|vps)
+    dir: terraform/clusters/{{.CLUSTER}}
     cmds:
       - mkdir -p ~/.kube
       - cp kubeconfig.yaml ~/.kube/config
