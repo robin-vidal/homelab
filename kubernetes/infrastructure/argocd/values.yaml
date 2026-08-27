@@ -3,6 +3,8 @@ configs:
     kustomize.buildOptions: --enable-helm --enable-alpha-plugins --enable-exec
 
 repoServer:
+  podAnnotations:
+    reloader.stakater.com/auto: "true"
   volumes:
     - name: age-key
       secret:

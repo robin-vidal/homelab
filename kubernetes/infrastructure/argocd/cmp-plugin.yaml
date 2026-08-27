@@ -10,6 +10,9 @@ data:
     metadata:
       name: ksops
     spec:
+      discover:
+        find:
+          glob: "**/ksops.yaml"
       generate:
         command:
           - sh
