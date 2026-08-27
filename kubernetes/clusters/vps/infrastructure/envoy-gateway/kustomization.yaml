@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
+  - crd-installer.yaml
   - gatewayclass.yaml
   - gateway.yaml
 helmCharts:
@@ -10,4 +11,4 @@ helmCharts:
     version: v1.9.0
     releaseName: envoy-gateway
     namespace: envoy-gateway-system
-    includeCRDs: true
+    includeCRDs: false
