@@ -22,6 +22,7 @@ data "talos_machine_configuration" "this" {
           allowSchedulingOnControlPlanes = var.allow_scheduling_on_controlplanes
         }
       })
-    ] : []
+    ] : [],
+    each.value.extra_patches
   )
 }

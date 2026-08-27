@@ -16,8 +16,9 @@ variable "install_disk" {
 variable "nodes" {
   description = "Map of nodes to provision, keyed by a unique node name"
   type = map(object({
-    ip   = string
-    role = string # "controlplane" or "worker"
+    ip            = string
+    role          = string # "controlplane" or "worker"
+    extra_patches = optional(list(string), [])
   }))
 
   validation {
