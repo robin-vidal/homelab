@@ -1,7 +1,7 @@
 nextcloud:
   host: cloud.robin-vidal.com
   configs:
-    trusted.php: |-
+    trusted.config.php: |-
       <?php
       $CONFIG = array(
         'trusted_domains' => array(
@@ -9,7 +9,7 @@ nextcloud:
           1 => 'cloud.robin-vidal.com',
         ),
       );
-    proxy.php: |-
+    proxy.config.php: |-
       <?php
       $CONFIG = array(
         'overwriteprotocol' => 'https',
