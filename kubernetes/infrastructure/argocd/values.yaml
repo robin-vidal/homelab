@@ -1,6 +1,12 @@
 configs:
   cm:
     kustomize.buildOptions: --enable-helm --enable-alpha-plugins --enable-exec
+  params:
+    server.insecure: true
+
+server:
+  ingress:
+    enabled: false
 
 repoServer:
   podAnnotations:

@@ -29,7 +29,7 @@ config:
   services:
     - Infrastructure:
         - ArgoCD:
-            href: http://argocd.homelab
+            href: https://argocd.robin-vidal.com
             icon: argocd
             description: GitOps
         - Grafana:
