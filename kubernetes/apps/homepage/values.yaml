@@ -33,7 +33,7 @@ config:
             icon: argocd
             description: GitOps
         - Grafana:
-            href: http://grafana.homelab
+            href: https://grafana.robin-vidal.com
             icon: grafana
             description: Dashboards
         - Prometheus:
