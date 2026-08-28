@@ -37,9 +37,13 @@ config:
             icon: grafana
             description: Dashboards
         - Prometheus:
-            href: http://prometheus.homelab
+            href: https://prometheus.robin-vidal.com
             icon: prometheus
             description: Metrics
+        - Alertmanager:
+            href: https://alertmanager.robin-vidal.com
+            icon: alertmanager
+            description: Alerts
     - Apps:
         - Nextcloud:
             href: https://cloud.robin-vidal.com
