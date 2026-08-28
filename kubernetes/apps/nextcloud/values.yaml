@@ -1,12 +1,17 @@
 nextcloud:
   host: cloud.robin-vidal.com
   configs:
-    trusted.php: |-
+    proxy.php: |-
       <?php
       $CONFIG = array(
         'trusted_domains' => array(
           0 => 'localhost',
           1 => 'cloud.robin-vidal.com',
+        ),
+        'overwriteprotocol' => 'https',
+        'overwritecliurl' => 'https://cloud.robin-vidal.com',
+        'trusted_proxies' => array(
+          0 => '10.244.0.0/24',
         ),
       );
   existingSecret:
