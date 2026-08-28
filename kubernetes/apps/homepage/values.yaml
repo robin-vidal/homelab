@@ -49,6 +49,10 @@ config:
             href: https://cloud.robin-vidal.com
             icon: nextcloud
             description: Cloud
+        - Vaultwarden:
+            href: https://vault.robin-vidal.com
+            icon: vaultwarden
+            description: Passwords
 
   bookmarks:
     - Dev:

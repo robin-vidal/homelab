@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - db.yaml
+  - httproute.yaml
 generators:
   - secrets/ksops.yaml
 helmCharts:
