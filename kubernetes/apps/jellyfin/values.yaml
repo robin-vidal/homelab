@@ -41,7 +41,7 @@ controllers:
               --allow-non-empty \
               --vfs-cache-mode full \
               --vfs-cache-max-size 2G \
-              --dir-cache-time 1h \
+              --dir-cache-time 5m \
               --no-modtime \
               --log-level INFO
         env:
