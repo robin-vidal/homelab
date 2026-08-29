@@ -35,6 +35,7 @@ controllers:
             export RCLONE_CONFIG_NEXTCLOUD_PASS=$(rclone obscure "$NEXTCLOUD_PASS")
             export RCLONE_CONFIG_NEXTCLOUD_URL="https://cloud.robin-vidal.com/remote.php/dav/files/${RCLONE_CONFIG_NEXTCLOUD_USER}/Jellyfin/"
             mkdir -p /media
+            fusermount -uz /media 2>/dev/null || true
             exec rclone mount nextcloud: /media \
               --allow-other \
               --vfs-cache-mode full \
