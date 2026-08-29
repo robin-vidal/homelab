@@ -1,0 +1,87 @@
+controllers:
+  jellyfin:
+    containers:
+      app:
+        image:
+          repository: jellyfin/jellyfin
+          tag: 10.10.7
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /health
+                port: 8096
+              initialDelaySeconds: 30
+              periodSeconds: 15
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /health
+                port: 8096
+              initialDelaySeconds: 15
+              periodSeconds: 10
+
+      rclone:
+        image:
+          repository: rclone/rclone
+          tag: "1"
+        command: [/bin/sh, -c]
+        args:
+          - |
+            export RCLONE_CONFIG_NEXTCLOUD_PASS=$(rclone obscure "$NEXTCLOUD_PASS")
+            export RCLONE_CONFIG_NEXTCLOUD_URL="https://cloud.robin-vidal.com/remote.php/dav/files/${RCLONE_CONFIG_NEXTCLOUD_USER}/Jellyfin/"
+            mkdir -p /media
+            exec rclone mount nextcloud: /media \
+              --allow-other \
+              --vfs-cache-mode full \
+              --vfs-cache-max-size 2G \
+              --dir-cache-time 1h \
+              --no-modtime \
+              --log-level INFO
+        env:
+          RCLONE_CONFIG_NEXTCLOUD_TYPE: webdav
+          RCLONE_CONFIG_NEXTCLOUD_VENDOR: nextcloud
+          RCLONE_CONFIG_NEXTCLOUD_USER:
+            valueFrom:
+              secretKeyRef:
+                name: jellyfin-nextcloud-credentials
+                key: username
+          NEXTCLOUD_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: jellyfin-nextcloud-credentials
+                key: password
+        securityContext:
+          privileged: true
+
+service:
+  app:
+    controller: jellyfin
+    ports:
+      http:
+        port: 8096
+
+persistence:
+  config:
+    type: persistentVolumeClaim
+    size: 5Gi
+    accessMode: ReadWriteOnce
+    advancedMounts:
+      jellyfin:
+        app:
+          - path: /config
+
+  media:
+    type: emptyDir
+    advancedMounts:
+      jellyfin:
+        rclone:
+          - path: /media
+            mountPropagation: Bidirectional
+        app:
+          - path: /media
+            mountPropagation: HostToContainer
