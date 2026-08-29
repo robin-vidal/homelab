@@ -38,6 +38,7 @@ controllers:
             fusermount -uz /media 2>/dev/null || true
             exec rclone mount nextcloud: /media \
               --allow-other \
+              --allow-non-empty \
               --vfs-cache-mode full \
               --vfs-cache-max-size 2G \
               --dir-cache-time 1h \
