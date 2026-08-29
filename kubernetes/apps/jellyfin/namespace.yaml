@@ -4,3 +4,5 @@ metadata:
   name: jellyfin
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
