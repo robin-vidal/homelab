@@ -1,0 +1,20 @@
+coder:
+  env:
+    - name: CODER_ACCESS_URL
+      value: "https://coder.robin-vidal.com"
+    - name: CODER_PG_CONNECTION_URL
+      valueFrom:
+        secretKeyRef:
+          name: coder-db-app
+          key: uri
+
+  service:
+    type: ClusterIP
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
