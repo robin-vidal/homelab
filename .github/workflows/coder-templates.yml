@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "coder/templates/**"
+  workflow_dispatch:
 
 jobs:
   push-template:
