@@ -1,0 +1,31 @@
+name: Push Coder templates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "coder/templates/**"
+  workflow_dispatch:
+
+jobs:
+  push-template:
+    name: Push to ${{ matrix.environment }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [vps]
+    environment: ${{ matrix.environment }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Coder CLI
+        run: curl -fsSL https://coder.com/install.sh | sh
+
+      - name: Push devcontainer template
+        env:
+          CODER_URL: ${{ secrets.CODER_URL }}
+          CODER_SESSION_TOKEN: ${{ secrets.CODER_TOKEN }}
+        run: |
+          coder templates push devcontainer \
+            --directory coder/templates/devcontainer/ \
+            --yes
