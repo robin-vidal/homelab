@@ -8,7 +8,7 @@ resources:
 helmCharts:
   - name: coder
     repo: https://helm.coder.com/v2
-    version: 2.20.0
+    version: 2.37.1
     releaseName: coder
     namespace: coder
     valuesFile: values.yaml
