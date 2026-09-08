@@ -23,7 +23,7 @@ jobs:
 
       - name: Push devcontainer template
         env:
-          CODER_URL: ${{ secrets.CODER_URL }}
+          CODER_URL: ${{ vars.CODER_URL }}
           CODER_SESSION_TOKEN: ${{ secrets.CODER_TOKEN }}
         run: |
           coder templates push devcontainer \
