@@ -4,6 +4,8 @@ coder:
       value: "https://coder.robin-vidal.com"
     - name: CODER_MAX_TOKEN_LIFETIME
       value: "87600h"
+    - name: CODER_MAX_ADMIN_TOKEN_LIFETIME
+      value: "87600h"
     - name: CODER_PG_CONNECTION_URL
       valueFrom:
         secretKeyRef:
