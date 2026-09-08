@@ -31,7 +31,6 @@ data "coder_parameter" "github_token" {
   name         = "github_token"
   display_name = "GitHub Token"
   description  = "Personal Access Token with repo scope"
-  sensitive    = true
   mutable      = true
   order        = 2
 }
@@ -57,7 +56,7 @@ locals {
   workspace_name = "coder-${data.coder_workspace_owner.me.name}-${data.coder_workspace.me.name}"
 }
 
-resource "kubernetes_persistent_volume_claim" "workspace" {
+resource "kubernetes_persistent_volume_claim_v1" "workspace" {
   metadata {
     name      = local.workspace_name
     namespace = "coder"
@@ -154,7 +153,7 @@ resource "kubernetes_deployment" "workspace" {
         volume {
           name = "workspace"
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.workspace.metadata[0].name
+            claim_name = kubernetes_persistent_volume_claim_v1.workspace.metadata[0].name
           }
         }
       }
