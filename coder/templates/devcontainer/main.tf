@@ -49,9 +49,19 @@ resource "coder_agent" "main" {
 
   startup_script = <<-EOT
     gh auth setup-git 2>/dev/null || true
+    curl -fsSL https://zed.dev/install.sh | sh
     curl -fsSL https://code-server.dev/install.sh | sh
     code-server --auth none --port 8080 &
   EOT
+}
+
+resource "coder_app" "zed" {
+  agent_id     = coder_agent.main.id
+  slug         = "zed"
+  display_name = "Zed"
+  url          = "zed://ssh/${data.coder_workspace_owner.me.name}@coder.${data.coder_workspace.me.name}"
+  icon         = "https://zed.dev/img/zed.png"
+  external     = true
 }
 
 resource "coder_app" "vscode" {
