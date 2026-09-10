@@ -55,6 +55,15 @@ resource "coder_agent" "main" {
   EOT
 }
 
+resource "coder_app" "zed" {
+  agent_id     = coder_agent.main.id
+  slug         = "zed"
+  display_name = "Zed"
+  url          = "zed://ssh/${data.coder_workspace_owner.me.name}@coder.${data.coder_workspace.me.name}"
+  icon         = "https://zed.dev/img/zed.png"
+  external     = true
+}
+
 resource "coder_app" "vscode" {
   agent_id     = coder_agent.main.id
   slug         = "vscode"
