@@ -49,7 +49,19 @@ resource "coder_agent" "main" {
 
   startup_script = <<-EOT
     gh auth setup-git 2>/dev/null || true
+    curl -fsSL https://code-server.dev/install.sh | sh
+    code-server --auth none --port 8080 &
   EOT
+}
+
+resource "coder_app" "vscode" {
+  agent_id     = coder_agent.main.id
+  slug         = "vscode"
+  display_name = "VS Code Web"
+  url          = "http://localhost:8080"
+  icon         = "/icon/code.svg"
+  subdomain    = false
+  share        = "owner"
 }
 
 locals {
