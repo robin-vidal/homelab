@@ -49,6 +49,7 @@ resource "coder_agent" "main" {
 
   startup_script = <<-EOT
     gh auth setup-git 2>/dev/null || true
+    curl -fsSL https://zed.dev/install.sh | sh
     curl -fsSL https://code-server.dev/install.sh | sh
     code-server --auth none --port 8080 &
   EOT
