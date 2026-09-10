@@ -21,7 +21,7 @@ jobs:
       - name: Install Coder CLI
         run: |
           curl -fsSL https://github.com/coder/coder/releases/download/v2.37.1/coder_2.37.1_linux_amd64.tar.gz \
-            | tar -xz -C /usr/local/bin coder
+            | tar -xz -C /usr/local/bin
 
       - name: Push devcontainer template
         env:
