@@ -1,5 +1,6 @@
 image:
   tag: edge
+  pullPolicy: Always
 
 secret:
   existingSecret: job-track-discord
