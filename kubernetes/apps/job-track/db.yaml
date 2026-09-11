@@ -1,0 +1,13 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: job-track-db
+  namespace: job-track
+spec:
+  instances: 1
+  storage:
+    size: 5Gi
+  bootstrap:
+    initdb:
+      database: job-track
+      owner: job-track

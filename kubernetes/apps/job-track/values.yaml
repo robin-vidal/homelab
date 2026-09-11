@@ -1,0 +1,13 @@
+secret:
+  existingSecret: job-track-discord
+
+env:
+  pollIntervalMin: 20
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
