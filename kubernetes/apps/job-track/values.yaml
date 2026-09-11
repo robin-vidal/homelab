@@ -1,3 +1,6 @@
+image:
+  tag: edge
+
 secret:
   existingSecret: job-track-discord
 
