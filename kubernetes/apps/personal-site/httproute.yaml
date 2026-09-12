@@ -12,5 +12,5 @@ spec:
     - "robin-vidal.com"
   rules:
     - backendRefs:
-        - name: personal-site
+        - name: personal-site-personal-site
           port: 80
