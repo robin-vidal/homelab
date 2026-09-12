@@ -1,0 +1,16 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: personal-site
+  namespace: personal-site
+spec:
+  parentRefs:
+    - name: vps-gateway
+      namespace: envoy-gateway-system
+      sectionName: https
+  hostnames:
+    - "robin-vidal.com"
+  rules:
+    - backendRefs:
+        - name: personal-site
+          port: 80
