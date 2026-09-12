@@ -1,0 +1,13 @@
+image:
+  pullPolicy: Always
+
+ingress:
+  enabled: false
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 16Mi
+  limits:
+    cpu: 100m
+    memory: 32Mi
