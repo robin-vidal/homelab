@@ -30,6 +30,9 @@ spec:
           image: ghcr.io/pouzor/homelable-backend:3.4.2
           ports:
             - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: homelable-auth
           volumeMounts:
             - name: data
               mountPath: /app/data
