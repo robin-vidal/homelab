@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: homelable
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/pouzor/homelable-frontend:3.4.2
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: homelable
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 80
