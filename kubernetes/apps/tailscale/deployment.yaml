@@ -30,13 +30,7 @@ spec:
             - name: TS_EXTRA_ARGS
               value: "--advertise-exit-node --hostname=vps-k8s"
             - name: TS_USERSPACE
-              value: "false"
-          securityContext:
-            capabilities:
-              add: ["NET_ADMIN", "NET_RAW"]
-          volumeMounts:
-            - name: tun
-              mountPath: /dev/net/tun
+              value: "true"
           resources:
             requests:
               cpu: 50m
@@ -44,8 +38,3 @@ spec:
             limits:
               cpu: 200m
               memory: 128Mi
-      volumes:
-        - name: tun
-          hostPath:
-            path: /dev/net/tun
-            type: CharDevice
