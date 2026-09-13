@@ -33,6 +33,12 @@ spec:
           envFrom:
             - secretRef:
                 name: homelable-auth
+          env:
+            - name: SCANNER_HTTP_PROBE_ENABLED
+              value: "true"
+          securityContext:
+            capabilities:
+              add: ["NET_RAW"]
           volumeMounts:
             - name: data
               mountPath: /app/data
