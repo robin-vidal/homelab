@@ -23,7 +23,7 @@ spec:
         certificateRefs:
           - name: wildcard-robin-vidal-com-tls
             namespace: envoy-gateway-system
-          - name: neetrack-brainer-sh-tls
+          - name: hello-brainer-sh-tls
             namespace: envoy-gateway-system
       allowedRoutes:
         namespaces:
