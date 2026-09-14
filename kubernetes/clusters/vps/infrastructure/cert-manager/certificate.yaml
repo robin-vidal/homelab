@@ -14,3 +14,19 @@ spec:
   dnsNames:
     - "robin-vidal.com"
     - "*.robin-vidal.com"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: neetrack-brainer-sh
+  namespace: envoy-gateway-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  secretName: neetrack-brainer-sh-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+    - "neetrack.brainer.sh"
