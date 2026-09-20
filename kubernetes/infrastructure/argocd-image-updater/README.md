@@ -12,10 +12,7 @@ Configured via annotations on the `apps-auto-image` ApplicationSet (`kubernetes/
 | personal-site | `ghcr.io/robin-vidal/personal-site` | `latest` | `digest` |
 | job-track     | `ghcr.io/robin-vidal/job-track`     | `edge`   | `digest` |
 
-> All three deploy a mutable rolling tag, so the `digest` strategy pins the
-> tag's digest in each `kustomization.yaml` and bumps it whenever the tag moves.
-> `allow-tags` restricts each to its single tag. Write-back uses the kustomize
-> method, adding an `images:` override to each app's `kustomization.yaml`.
+> All three deploy a mutable rolling tag, so the `digest` strategy pins the tag's digest in each `kustomization.yaml` and bumps it whenever the tag moves. `allow-tags` restricts each to its single tag. Write-back uses the kustomize method, adding an `images:` override to each app's `kustomization.yaml`.
 
 ## One-time setup: SSH deploy key
 
