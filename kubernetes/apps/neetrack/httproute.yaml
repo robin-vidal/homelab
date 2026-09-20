@@ -10,7 +10,6 @@ spec:
       sectionName: https
   hostnames:
     - "neetrack.robin-vidal.com"
-    - "hello.brainer.sh"
   rules:
     - backendRefs:
         - name: neetrack
