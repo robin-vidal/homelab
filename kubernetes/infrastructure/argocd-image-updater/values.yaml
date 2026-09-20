@@ -1,0 +1,6 @@
+config:
+  log.level: info
+  # Read Argo CD Application CRs directly from the API server (no Argo CD API token).
+  applications_api: kubernetes
+  git.user: argocd-image-updater
+  git.email: image-updater@users.noreply.github.com

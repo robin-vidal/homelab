@@ -10,6 +10,13 @@ spec:
         revision: main
         directories:
           - path: kubernetes/apps/*
+          # Apps with Argo CD Image Updater are handled by the `apps-auto-image` set below.
+          - path: kubernetes/apps/neetrack
+            exclude: true
+          - path: kubernetes/apps/personal-site
+            exclude: true
+          - path: kubernetes/apps/job-track
+            exclude: true
   template:
     metadata:
       name: "app-{{path.basename}}"
@@ -22,6 +29,54 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{path.basename}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps-auto-image
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: neetrack
+            image: ghcr.io/robin-vidal/neetrack
+            strategy: digest
+            allowTags: "regexp:^latest$"
+          - name: personal-site
+            image: ghcr.io/robin-vidal/personal-site
+            strategy: digest
+            allowTags: "regexp:^latest$"
+          - name: job-track
+            image: ghcr.io/robin-vidal/job-track
+            strategy: digest
+            allowTags: "regexp:^edge$"
+  template:
+    metadata:
+      name: "app-{{name}}"
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: "app={{image}}"
+        argocd-image-updater.argoproj.io/write-back-method: "git:secret:argocd/argocd-image-updater-ssh"
+        argocd-image-updater.argoproj.io/git-repository: "git@github.com:robin-vidal/homelab.git"
+        argocd-image-updater.argoproj.io/git-branch: main
+        argocd-image-updater.argoproj.io/app.update-strategy: "{{strategy}}"
+        argocd-image-updater.argoproj.io/app.kustomize.image-name: "{{image}}"
+        argocd-image-updater.argoproj.io/app.allow-tags: "{{allowTags}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/robin-vidal/homelab
+        targetRevision: main
+        path: "kubernetes/apps/{{name}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{name}}"
       syncPolicy:
         automated:
           prune: true
