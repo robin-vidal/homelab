@@ -6,13 +6,16 @@ Auto-updates container image tags for selected apps and commits the change back 
 
 Configured via annotations on the `apps-auto-image` ApplicationSet (`kubernetes/clusters/vps/apps.yaml`):
 
-| App           | Image                            | Strategy       |
-| ------------- | -------------------------------- | -------------- |
-| neetrack      | `ghcr.io/robin-vidal/neetrack`      | `newest-build` |
-| personal-site | `ghcr.io/robin-vidal/personal-site` | `newest-build` |
-| job-track     | `ghcr.io/robin-vidal/job-track`     | `digest` (tag `edge`) |
+| App           | Image                               | Tag      | Strategy |
+| ------------- | ----------------------------------- | -------- | -------- |
+| neetrack      | `ghcr.io/robin-vidal/neetrack`      | `latest` | `digest` |
+| personal-site | `ghcr.io/robin-vidal/personal-site` | `latest` | `digest` |
+| job-track     | `ghcr.io/robin-vidal/job-track`     | `edge`   | `digest` |
 
-> Verify the image repositories and strategies match how CI tags these images. `newest-build` = follow the most recently pushed tag; `digest` = pin the `edge` tag by digest and update when it moves. Write-back uses the kustomize method, adding an `images:` override to each app's `kustomization.yaml`.
+> All three deploy a mutable rolling tag, so the `digest` strategy pins the
+> tag's digest in each `kustomization.yaml` and bumps it whenever the tag moves.
+> `allow-tags` restricts each to its single tag. Write-back uses the kustomize
+> method, adding an `images:` override to each app's `kustomization.yaml`.
 
 ## One-time setup: SSH deploy key
 

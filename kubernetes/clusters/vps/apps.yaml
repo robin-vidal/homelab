@@ -47,12 +47,12 @@ spec:
         elements:
           - name: neetrack
             image: ghcr.io/robin-vidal/neetrack
-            strategy: newest-build
-            allowTags: "regexp:.*"
+            strategy: digest
+            allowTags: "regexp:^latest$"
           - name: personal-site
             image: ghcr.io/robin-vidal/personal-site
-            strategy: newest-build
-            allowTags: "regexp:.*"
+            strategy: digest
+            allowTags: "regexp:^latest$"
           - name: job-track
             image: ghcr.io/robin-vidal/job-track
             strategy: digest
