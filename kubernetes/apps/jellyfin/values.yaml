@@ -59,6 +59,21 @@ controllers:
                 key: password
         securityContext:
           privileged: true
+        # Self-heal: if the FUSE mount dies (e.g. Nextcloud restart severs the
+        # WebDAV backend), `test -d /media` fails with ENOTCONN. Restarting the
+        # rclone container re-runs `fusermount -uz` + remounts; the app sees the
+        # fresh mount via HostToContainer propagation, no manual pod delete.
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              exec:
+                command: [/bin/sh, -c, "test -d /media"]
+              initialDelaySeconds: 30
+              periodSeconds: 20
+              timeoutSeconds: 10
+              failureThreshold: 3
 
 service:
   app:
