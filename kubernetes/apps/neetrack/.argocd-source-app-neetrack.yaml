@@ -1,0 +1,3 @@
+kustomize:
+  images:
+  - ghcr.io/robin-vidal/neetrack=ghcr.io/robin-vidal/neetrack:latest@sha256:bdcb48375461c01d56e15eeca433ad73aab2bda94def2af7bbd6e46fdcf291bf
