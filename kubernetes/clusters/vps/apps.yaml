@@ -45,29 +45,30 @@ spec:
   generators:
     - list:
         elements:
+          # The `digest` strategy tracks one mutable tag, so the tag must be part
+          # of the image spec below; it is the version constraint.
           - name: neetrack
             image: ghcr.io/robin-vidal/neetrack
+            tag: latest
             strategy: digest
-            allowTags: "regexp:^latest$"
           - name: personal-site
             image: ghcr.io/robin-vidal/personal-site
+            tag: latest
             strategy: digest
-            allowTags: "regexp:^latest$"
           - name: job-track
             image: ghcr.io/robin-vidal/job-track
+            tag: edge
             strategy: digest
-            allowTags: "regexp:^edge$"
   template:
     metadata:
       name: "app-{{name}}"
       annotations:
-        argocd-image-updater.argoproj.io/image-list: "app={{image}}"
+        argocd-image-updater.argoproj.io/image-list: "app={{image}}:{{tag}}"
         argocd-image-updater.argoproj.io/write-back-method: "git:secret:argocd/argocd-image-updater-ssh"
         argocd-image-updater.argoproj.io/git-repository: "git@github.com:robin-vidal/homelab.git"
         argocd-image-updater.argoproj.io/git-branch: main
         argocd-image-updater.argoproj.io/app.update-strategy: "{{strategy}}"
         argocd-image-updater.argoproj.io/app.kustomize.image-name: "{{image}}"
-        argocd-image-updater.argoproj.io/app.allow-tags: "{{allowTags}}"
     spec:
       project: default
       source:
