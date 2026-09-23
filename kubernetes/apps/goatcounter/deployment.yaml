@@ -27,6 +27,9 @@ spec:
       labels:
         app: goatcounter
     spec:
+      # GoatCounter reads every GOATCOUNTER_<FLAG> variable as a flag, and the
+      # Service named `goatcounter` would inject GOATCOUNTER_PORT=tcp://10.x:8080.
+      enableServiceLinks: false
       containers:
         - name: goatcounter
           image: arp242/goatcounter:2.7.0
