@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/robin-vidal/personal-site=ghcr.io/robin-vidal/personal-site:latest@sha256:5b835ccdc8558b2f3ebadb0e16ee8c630796c5a239f2cf07a4c5a160d67216fc
+  - ghcr.io/robin-vidal/personal-site=ghcr.io/robin-vidal/personal-site:latest@sha256:dd08d12fe5232c553370f759892cf26099d5d5c4d4684cb067bc885250559c89
