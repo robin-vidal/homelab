@@ -1,0 +1,23 @@
+image:
+  # Chart appVersion 0.2.0 has no image tag published yet; edge tracks main.
+  tag: edge
+  pullPolicy: Always
+
+discord:
+  guildId: "1479826253765935146"
+  alertChannelId: "1574935534675951736"
+
+secret:
+  existingSecret: job-track-discord
+
+persistence:
+  enabled: true
+  size: 1Gi
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
