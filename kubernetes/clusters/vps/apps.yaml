@@ -15,8 +15,6 @@ spec:
             exclude: true
           - path: kubernetes/apps/personal-site
             exclude: true
-          - path: kubernetes/apps/job-track
-            exclude: true
   template:
     metadata:
       name: "app-{{path.basename}}"
@@ -54,10 +52,6 @@ spec:
           - name: personal-site
             image: ghcr.io/robin-vidal/personal-site
             tag: latest
-            strategy: digest
-          - name: job-track
-            image: ghcr.io/robin-vidal/job-track
-            tag: edge
             strategy: digest
   template:
     metadata:
