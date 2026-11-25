@@ -4,8 +4,8 @@ image:
   pullPolicy: Always
 
 discord:
-  guildId: "1479826253765935146"
-  alertChannelId: "1574935534675951736"
+  guildId: "1483447969117241529"
+  alertChannelId: "1574938186126459052"
 
 secret:
   existingSecret: job-track-discord
